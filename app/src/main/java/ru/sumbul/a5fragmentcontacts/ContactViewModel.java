@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class ContactViewModel extends ViewModel {
 
-    List<Contacts> contactsList = new List<Contacts>()
+    List<Contacts> contactsList = new List<Contacts>();
 
     public List<Contacts> generateContactsList() {
 
