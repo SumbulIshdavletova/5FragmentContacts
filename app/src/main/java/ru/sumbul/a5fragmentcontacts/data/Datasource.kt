@@ -1,6 +1,7 @@
-package ru.sumbul.recycleviewaston6.data
+package ru.sumbul.a5fragmentcontacts.data
 
-import ru.sumbul.recycleviewaston6.model.Contact
+
+import ru.sumbul.a5fragmentcontacts.model.Contact
 import java.util.*
 
 
@@ -8,7 +9,7 @@ class Datasource {
 
     fun loadContacts(): kotlin.collections.List<Contact> {
         val data = mutableListOf<Contact>()
-        (0..100).forEach { i -> data.add(i, Contact(getRandomName(), getRandomNumber())) }
+        (0..100).forEach { i -> data.add(i, Contact(i, getRandomName(), getRandomNumber())) }
         return data
     }
 
