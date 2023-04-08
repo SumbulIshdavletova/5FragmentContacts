@@ -34,8 +34,8 @@ class ContactInfoFragment : Fragment() {
 
         if (id != null) {
             val num = dataset[id].number
-            val namee = dataset[id].name
-            binding.name.text = namee
+            val name = dataset[id].name
+            binding.name.text = name
             binding.number.text = num.toString()
         }
 
