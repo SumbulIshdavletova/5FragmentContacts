@@ -9,7 +9,7 @@ class Datasource {
 
     fun loadContacts(): kotlin.collections.List<Contact> {
         val data = mutableListOf<Contact>()
-        (0..100).forEach { i -> data.add(i, Contact(i, getRandomName(), getRandomNumber())) }
+        (0..102).forEach { i -> data.add(i, Contact(i, getRandomName(), getRandomNumber())) }
         return data
     }
 
@@ -40,6 +40,6 @@ class Datasource {
 
 private fun fillList(): List<String> {
     val data = mutableListOf<String>()
-    (0..30).forEach { i -> data.add("$i element") }
+    (0..102).forEach { i -> data.add("$i element") }
     return data
 }
