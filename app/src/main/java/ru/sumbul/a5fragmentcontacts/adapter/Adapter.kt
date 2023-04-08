@@ -1,6 +1,7 @@
 package ru.sumbul.a5fragmentcontacts.adapter
 
 
+import android.icu.text.Transliterator.Position
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -13,6 +14,7 @@ import ru.sumbul.a5fragmentcontacts.util.loadCircleCrop
 
 interface OnInteractionListener {
     fun onClick(contact: Contact) {}
+    fun onRemove(contact: Contact) {}
 }
 
 
@@ -27,6 +29,7 @@ class Adapter(
 
     override fun onBindViewHolder(holder: ContactViewHolder, position: Int) {
         val contact = getItem(position)
+        holder.layoutPosition
         holder.bind(contact)
     }
 }
@@ -42,10 +45,16 @@ class ContactViewHolder(
             id.text = contact.id.toString()
             val url = "https://picsum.photos/200?random="
 
-            imageView.loadCircleCrop(url+contact.id)
+            imageView.loadCircleCrop(url + contact.id)
 
             itemView.setOnClickListener {
                 onInteractionListener.onClick(contact)
+            }
+
+            itemView.setOnLongClickListener {
+                onInteractionListener.onRemove(contact)
+                bindingAdapter?.notifyItemRemoved(getLayoutPosition())
+                return@setOnLongClickListener true
             }
 
         }

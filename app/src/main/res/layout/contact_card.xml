@@ -7,14 +7,17 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/min_margin"
+        android:layout_marginBottom="@dimen/min_margin">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="@dimen/contact_image_size"
             android:layout_height="@dimen/contact_image_size"
+            android:layout_marginEnd="@dimen/min_margin"
+            android:layout_marginStart="@dimen/min_margin"
             android:adjustViewBounds="true"
-            android:layout_margin="@dimen/min_margin"
             android:contentDescription="@string/contact_image"
             app:layout_constraintEnd_toStartOf="@id/id"
             app:layout_constraintStart_toStartOf="parent"

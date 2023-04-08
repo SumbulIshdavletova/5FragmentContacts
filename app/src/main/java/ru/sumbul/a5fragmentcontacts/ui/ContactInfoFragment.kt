@@ -37,6 +37,7 @@ class ContactInfoFragment : Fragment() {
             val name = dataset[id].name
             binding.name.text = name
             binding.number.text = num.toString()
+
         }
 
 
