@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.sumbul.a5fragmentcontacts.R
 import ru.sumbul.a5fragmentcontacts.adapter.Adapter
-import ru.sumbul.a5fragmentcontacts.adapter.OnInteractionListener
 import ru.sumbul.a5fragmentcontacts.data.Datasource
 import ru.sumbul.a5fragmentcontacts.databinding.FragmentContactsListBinding
 import ru.sumbul.a5fragmentcontacts.model.Contact
@@ -33,19 +32,15 @@ class ContactsListFragment : Fragment() {
             false
         )
 
-        val adapter = Adapter(object : OnInteractionListener {
-            override fun onClick(contact: Contact) {
-                findNavController().navigate(
-                    R.id.action_contactsListFragment_to_contactInfoFragment,
-                    Bundle().apply {
-                        textArg = contact.id.toString()
-                    })
-            }
+        val myAdapter = Adapter(Adapter.OnClickListener { contact ->
+            findNavController().navigate(
+                R.id.action_contactsListFragment_to_contactInfoFragment,
+                Bundle().apply {
+                    textArg = contact.id.toString()
+                })
+        }, Adapter.OnLongClick { contact ->
+            dataset.removeAt(contact.id)
 
-            override fun onRemove(contact: Contact) {
-                dataset.removeAt(contact.id)
-
-            }
         })
         val manager = LinearLayoutManager(requireContext())
 
@@ -53,15 +48,16 @@ class ContactsListFragment : Fragment() {
         val recyclerView = binding.list
 
         recyclerView.layoutManager = manager
-        recyclerView.adapter = adapter
-        adapter.submitList(dataset)
+        recyclerView.adapter = myAdapter
+        myAdapter.setData(dataset)
+
 
         val searchInput = binding.textInputEdit
         searchInput.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 val question = searchInput.text.toString()
 
-                adapter.submitList(filterContacts(question))
+                myAdapter.setData(filterContacts(question))
             }
             return@setOnEditorActionListener false
         }
@@ -76,5 +72,6 @@ class ContactsListFragment : Fragment() {
     private fun filterContacts(question: String): List<Contact> {
         return dataset.filter { it.name.contains(question, ignoreCase = true) }
     }
+
 }
 
