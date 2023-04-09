@@ -20,6 +20,7 @@ import ru.sumbul.a5fragmentcontacts.ui.ContactInfoFragment.Companion.textArg
 
 class ContactsListFragment : Fragment() {
     val dataset: MutableList<Contact> = Datasource().loadContacts() as MutableList<Contact>
+    var myAdapter: Adapter? = null;
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,7 +33,7 @@ class ContactsListFragment : Fragment() {
             false
         )
 
-        val myAdapter = Adapter(Adapter.OnClickListener { contact ->
+        myAdapter = Adapter(Adapter.OnClickListener { contact ->
             findNavController().navigate(
                 R.id.action_contactsListFragment_to_contactInfoFragment,
                 Bundle().apply {
@@ -40,7 +41,7 @@ class ContactsListFragment : Fragment() {
                 })
         }, Adapter.OnLongClick { contact ->
             dataset.removeAt(contact.id)
-
+   //         myAdapter?.setData(dataset)
         })
         val manager = LinearLayoutManager(requireContext())
 
@@ -49,7 +50,7 @@ class ContactsListFragment : Fragment() {
 
         recyclerView.layoutManager = manager
         recyclerView.adapter = myAdapter
-        myAdapter.setData(dataset)
+        myAdapter?.setData(dataset)
 
 
         val searchInput = binding.textInputEdit
@@ -57,7 +58,7 @@ class ContactsListFragment : Fragment() {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 val question = searchInput.text.toString()
 
-                myAdapter.setData(filterContacts(question))
+                myAdapter?.setData(filterContacts(question))
             }
             return@setOnEditorActionListener false
         }

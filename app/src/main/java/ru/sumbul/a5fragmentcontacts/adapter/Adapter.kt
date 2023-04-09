@@ -1,11 +1,9 @@
 package ru.sumbul.a5fragmentcontacts.adapter
 
 
-import android.icu.text.Transliterator.Position
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.sumbul.a5fragmentcontacts.databinding.ContactCardBinding
 import ru.sumbul.a5fragmentcontacts.model.Contact
@@ -48,12 +46,11 @@ class Adapter(
         holder.itemView.setOnClickListener { onClickListener.onClick(oldContactsList[position]) }
         holder.itemView.setOnLongClickListener {
             onLongClick.onRemove(oldContactsList[position])
-            val g = oldContactsList.size
             (oldContactsList as MutableList<Contact>).removeAt(position)
             val newList = oldContactsList
-            newList.size
+
             setData(newList)
-            notifyDataSetChanged()
+          notifyItemRemoved(position)
             return@setOnLongClickListener true
 
         }
@@ -66,7 +63,7 @@ class Adapter(
     fun setData(newContactList: List<Contact>) {
         val diffUtil = ContactDiffCallback(oldContactsList, newContactList)
         val diffResults = DiffUtil.calculateDiff(diffUtil)
-        oldContactsList = newContactList
+    oldContactsList = newContactList
         diffResults.dispatchUpdatesTo(this)
     }
 
